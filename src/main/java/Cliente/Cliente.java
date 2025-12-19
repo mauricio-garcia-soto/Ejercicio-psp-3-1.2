@@ -11,20 +11,21 @@ public class Cliente {
             DatagramSocket datagramSocket=new DatagramSocket();
             InetAddress addres=InetAddress.getByName("localHost");
             int serverPort= 12345;
+            while (true) {
+                System.out.println("introduce que numero quieres ver los primos que hay hasta el");
+                String resp = String.valueOf(teclado.nextInt());
+                teclado.nextLine();
+                byte[] datos = resp.getBytes();
 
-            System.out.println("introduce que numero quieres ver los primos que hay hasta el");
-            String resp = String.valueOf(teclado.nextInt());
-            teclado.nextLine();
-            byte[] datos=resp.getBytes();
+                DatagramPacket enviarPaquete = new DatagramPacket(datos, datos.length, addres, serverPort);
+                datagramSocket.send(enviarPaquete);
 
-            DatagramPacket enviarPaquete=new DatagramPacket(datos,datos.length,addres,serverPort);
-            datagramSocket.send(enviarPaquete);
-
-            byte[]recibe=new byte[1024];
-            DatagramPacket recibirPaquete= new DatagramPacket(recibe,recibe.length);
-            datagramSocket.receive(recibirPaquete);
-            String mensaje=new String(recibirPaquete.getData(),0,recibirPaquete.getLength());
-            System.out.println("los numeros primos que hay del 0 al " +resp+" son "+mensaje);
+                byte[] recibe = new byte[1024];
+                DatagramPacket recibirPaquete = new DatagramPacket(recibe, recibe.length);
+                datagramSocket.receive(recibirPaquete);
+                String mensaje = new String(recibirPaquete.getData(), 0, recibirPaquete.getLength());
+                System.out.println("los numeros primos que hay del 0 al " + resp + " son " + mensaje);
+            }
         } catch (SocketException e) {
             throw new RuntimeException(e);
         } catch (UnknownHostException e) {
