@@ -7,9 +7,10 @@ import java.util.Scanner;
 public class Cliente {
     public static void main(String args[]){
         Scanner teclado= new Scanner(System.in);
+        String serveraddres = "34.236.154.196";
         try {
             DatagramSocket datagramSocket=new DatagramSocket();
-            InetAddress addres=InetAddress.getByName("localHost");
+            InetAddress addres=InetAddress.getByName(serveraddres);
             int serverPort= 12345;
             while (true) {
                 System.out.println("introduce que numero quieres ver los primos que hay hasta el");
